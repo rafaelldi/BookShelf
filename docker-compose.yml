@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:80"
+    depends_on:
+      - mongodb
+      - seq
+  
+  seq:
+    image: datalust/seq
+    ports:
+      - "8001:80"
+    environment:
+      - ACCEPT_EULA: Y
+  
+  mongodb:
+    image: mongo
+    restart: always
+    volumes:
+      - /.mongo-int/:/docker-entrypoint-initdb.d/
+    environment:
+      MONGO_INITDB_DATABASE: BookShelfDb

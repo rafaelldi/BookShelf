@@ -1,0 +1,6 @@
+#!/bin/bash
+image="rafaelldi/bookshelf"
+tag_timestamp=$(date +%Y-%m-%d-$TRAVIS_BUILD_NUMBER)
+echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+docker tag bookshelf "${image}:${tag_timestamp}"
+docker push "${image}:${tag_timestamp}"

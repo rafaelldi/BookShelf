@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using BookShelf.Repository;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace BookShelf
 {
@@ -22,26 +21,56 @@ namespace BookShelf
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHealthChecks();
+            services.AddHealthChecksUI();
+            services.AddApiVersioning(options => options.ReportApiVersions = true);
+            services.AddVersionedApiExplorer(o =>
+            {
+                o.GroupNameFormat = "'v'VVV";
+                o.SubstituteApiVersionInUrl = true;
+            });
+            services.AddSwaggerGen(
+                options =>
+                {
+                    var provider = services.BuildServiceProvider()
+                        .GetRequiredService<IApiVersionDescriptionProvider>();
+
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerDoc(description.GroupName, new Info
+                        {
+                            Title = $"BookShelf API {description.ApiVersion}",
+                            Version = description.ApiVersion.ToString()
+                        });
+                    }
+                });
+            services.AddAutoMapper();
+            services.Configure<MongoSettings>(Configuration.GetSection("MongoConnection"));
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
         {
-            if (env.IsDevelopment())
+            app.UseHealthChecks("/healthcheck", new HealthCheckOptions
             {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
+            app.UseHealthChecksUI();
+            app.UseSwagger();
+            app.UseSwaggerUI(
+                options =>
+                {
+                    foreach (var description in provider.ApiVersionDescriptions)
+                    {
+                        options.SwaggerEndpoint(
+                            $"/swagger/{description.GroupName}/swagger.json",
+                            description.GroupName.ToUpperInvariant());
+                    }
+                });
             app.UseMvc();
         }
     }
