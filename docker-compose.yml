@@ -2,21 +2,24 @@ version: '3.4'
 
 services:
   api:
+    container_name: bookshelf-api
     build: .
     ports:
       - "8000:80"
     depends_on:
       - mongodb
       - seq
-  
+
   seq:
+    container_name: bookshelf-seq
     image: datalust/seq
     ports:
       - "8001:80"
     environment:
-      - ACCEPT_EULA: Y
-  
+      ACCEPT_EULA: Y
+
   mongodb:
+    container_name: bookshelf-mongo
     image: mongo
     restart: always
     volumes:

@@ -23,29 +23,29 @@ namespace BookShelf
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHealthChecks();
-            services.AddHealthChecksUI();
+//            services.AddHealthChecks();
+//            services.AddHealthChecksUI();
             services.AddApiVersioning(options => options.ReportApiVersions = true);
             services.AddVersionedApiExplorer(o =>
             {
                 o.GroupNameFormat = "'v'VVV";
                 o.SubstituteApiVersionInUrl = true;
             });
-            services.AddSwaggerGen(
-                options =>
-                {
-                    var provider = services.BuildServiceProvider()
-                        .GetRequiredService<IApiVersionDescriptionProvider>();
-
-                    foreach (var description in provider.ApiVersionDescriptions)
-                    {
-                        options.SwaggerDoc(description.GroupName, new Info
-                        {
-                            Title = $"BookShelf API {description.ApiVersion}",
-                            Version = description.ApiVersion.ToString()
-                        });
-                    }
-                });
+//            services.AddSwaggerGen(
+//                options =>
+//                {
+//                    var provider = services.BuildServiceProvider()
+//                        .GetRequiredService<IApiVersionDescriptionProvider>();
+//
+//                    foreach (var description in provider.ApiVersionDescriptions)
+//                    {
+//                        options.SwaggerDoc(description.GroupName, new Info
+//                        {
+//                            Title = $"BookShelf API {description.ApiVersion}",
+//                            Version = description.ApiVersion.ToString()
+//                        });
+//                    }
+//                });
             services.AddAutoMapper();
             services.Configure<MongoSettings>(Configuration.GetSection("MongoConnection"));
 
@@ -54,23 +54,23 @@ namespace BookShelf
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
         {
-            app.UseHealthChecks("/healthcheck", new HealthCheckOptions
-            {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            });
-            app.UseHealthChecksUI();
-            app.UseSwagger();
-            app.UseSwaggerUI(
-                options =>
-                {
-                    foreach (var description in provider.ApiVersionDescriptions)
-                    {
-                        options.SwaggerEndpoint(
-                            $"/swagger/{description.GroupName}/swagger.json",
-                            description.GroupName.ToUpperInvariant());
-                    }
-                });
+//            app.UseHealthChecks("/healthcheck", new HealthCheckOptions
+//            {
+//                Predicate = _ => true,
+//                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+//            });
+//            app.UseHealthChecksUI();
+//            app.UseSwagger();
+//            app.UseSwaggerUI(
+//                options =>
+//                {
+//                    foreach (var description in provider.ApiVersionDescriptions)
+//                    {
+//                        options.SwaggerEndpoint(
+//                            $"/swagger/{description.GroupName}/swagger.json",
+//                            description.GroupName.ToUpperInvariant());
+//                    }
+//                });
             app.UseMvc();
         }
     }

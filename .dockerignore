@@ -1,0 +1,11 @@
+**/bin
+**/obj
+**/out
+**/.vscode
+**/.vs
+**/.idea
+**/.git
+**/healthchecksdb
+**/Properties
+*.md
+.dotnet
