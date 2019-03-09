@@ -1,17 +1,18 @@
-using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace BookShelf.Repository.Entities
 {
-    public class BookShelfCollection
+    public class BookEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         [BsonElement]
-        public string UserEmail { get; set; }
+        public string Title { get; set; }
         [BsonElement]
-        public List<BookShelfEntity> BookShelves { get; set; }
+        public string Author { get; set; }
+        [BsonElement]
+        public string Comment { get; set; }
     }
 }

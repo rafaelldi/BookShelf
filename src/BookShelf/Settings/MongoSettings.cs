@@ -1,4 +1,4 @@
-namespace BookShelf.Repository
+namespace BookShelf.Settings
 {
     public class MongoSettings
     {

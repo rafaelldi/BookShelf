@@ -1,4 +1,5 @@
 using BookShelf.Repository.Entities;
+using BookShelf.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 

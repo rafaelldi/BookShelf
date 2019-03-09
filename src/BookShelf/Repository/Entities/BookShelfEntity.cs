@@ -4,14 +4,14 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace BookShelf.Repository.Entities
 {
-    public class BookShelfCollection
+    public class BookShelfEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         [BsonElement]
-        public string UserEmail { get; set; }
+        public string Name { get; set; }
         [BsonElement]
-        public List<BookShelfEntity> BookShelves { get; set; }
+        public List<BookEntity> Books { get; set; }
     }
 }
