@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace BookShelf.Repository.Entities
 {
-    public class BookShelfCollection
+    public class BookShelfCollectionEntity
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
