@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using BookShelf.Repository.Entities;
 using BookShelf.Settings;
 using Microsoft.Extensions.Options;
@@ -17,11 +18,17 @@ namespace BookShelf.Repository
             _collection = database.GetCollection<BookShelfEntity>(mongoSettings.Value.Collection);
         }
 
+        public IMongoQueryable<BookShelfEntity> GetBookShelves()
+        {
+            var bookShelves = _collection.AsQueryable();
+            return bookShelves;
+        }
+
         public IMongoQueryable<BookShelfEntity> GetBookShelf(string id)
         {
-            var collection = _collection.AsQueryable()
+            var bookShelf = _collection.AsQueryable()
                 .Where(bsc => bsc.Id == id);
-            return collection;
+            return bookShelf;
         }
 
         public IMongoQueryable<BookEntity> GetBook(string id)
