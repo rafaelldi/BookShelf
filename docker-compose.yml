@@ -6,6 +6,8 @@ services:
     build: .
     ports:
       - "8000:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
     depends_on:
       - mongodb
       - seq

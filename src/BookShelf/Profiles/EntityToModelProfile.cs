@@ -9,6 +9,7 @@ namespace BookShelf.Profiles
         public EntityToModelProfile()
         {
             CreateMap<BookEntity, Book>();
+            CreateMap<BookShelfEntity, Models.BookShelf>();
         }
     }
 }
