@@ -10,7 +10,7 @@ namespace BookShelf.Profiles
         {
             CreateMap<BookEntity, Book>();
             CreateMap<BookShelfEntity, Models.BookShelf>();
-            CreateMap<BookShelfEntity, Models.BookShelfDetails>();
+            CreateMap<BookShelfEntity, BookShelfDetails>();
         }
     }
 }
