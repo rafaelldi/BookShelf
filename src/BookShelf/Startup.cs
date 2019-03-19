@@ -25,8 +25,9 @@ namespace BookShelf
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<MongoSettings>(Configuration.GetSection("MongoConnection"));
-            
-            services.AddHealthChecks();
+
+            services.AddHealthChecks()
+                .AddMongoDb(Configuration["MongoConnection:ConnectionString"]);
             services.AddHealthChecksUI();
             services.AddApiVersioning(options => options.ReportApiVersions = true);
             services.AddVersionedApiExplorer(o =>
