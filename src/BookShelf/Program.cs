@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using App.Metrics.AspNetCore;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -41,6 +42,7 @@ namespace BookShelf
             WebHost.CreateDefaultBuilder(args)
                 .SuppressStatusMessages(true)
                 .UseSerilog()
+                .UseMetrics()
                 .UseStartup<Startup>();
     }
 }

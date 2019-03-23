@@ -51,8 +51,8 @@ namespace BookShelf
                     }
                 });
             services.AddAutoMapper();
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMetrics();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
