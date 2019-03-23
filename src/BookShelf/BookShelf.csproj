@@ -9,7 +9,8 @@
     <PackageReference Include="App.Metrics.AspNetCore.Mvc" Version="3.0.0" />
     <PackageReference Include="App.Metrics.Formatters.Prometheus" Version="3.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="2.2.2" />
-    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="2.2.11" />
+    <PackageReference Include="AspNetCore.HealthChecks.Publisher.Prometheus" Version="2.2.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="2.2.25" />
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
