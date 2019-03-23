@@ -14,9 +14,7 @@ namespace BookShelf
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(!string.IsNullOrEmpty(environment)
-                    ? $"appsettings.{environment}.json"
-                    : "appsettings.json")
+                .AddJsonFile($"appsettings.{environment}.json")
                 .Build();
 
             Log.Logger = new LoggerConfiguration()
