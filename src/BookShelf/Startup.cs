@@ -27,8 +27,7 @@ namespace BookShelf
             services.Configure<MongoSettings>(Configuration.GetSection("MongoConnection"));
 
             services.AddHealthChecks()
-                .AddMongoDb(Configuration["MongoConnection:ConnectionString"])
-                .AddPrometheusGatewayPublisher("http://localhost/healthcheck/prometheus", "health");
+                .AddMongoDb(Configuration["MongoConnection:ConnectionString"]);
             services.AddHealthChecksUI();
             services.AddApiVersioning(options => options.ReportApiVersions = true);
             services.AddVersionedApiExplorer(o =>

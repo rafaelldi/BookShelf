@@ -11,6 +11,7 @@ services:
     depends_on:
       - mongodb
       - seq
+      - prometheus
 
   seq:
     container_name: bookshelf-seq
@@ -19,6 +20,14 @@ services:
       - "8001:80"
     environment:
       ACCEPT_EULA: Y
+      
+  prometheus:
+    container_name: bookshelf-prometheus
+    image: prom/prometheus
+    ports:
+      - "8002:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
   mongodb:
     container_name: bookshelf-mongo
